@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { fetchTasks } from './redux/taskSlice';
+import TaskInput from './TaskInput';
+import TaskList from './TaskList';
+import TaskFilter from './TaskFilter';
+import { useAppDispatch } from './redux/store';
 
-function App() {
+const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    console.log('Fetching tasks...');
+    dispatch(fetchTasks());
+  }, [dispatch]);
+
+  console.log('Rendering App component...');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1 className="add-task">Task Manager</h1>
+      <TaskInput />
+      <TaskFilter />
+      <TaskList />
     </div>
   );
-}
+};
 
 export default App;
